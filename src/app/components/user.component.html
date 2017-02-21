@@ -1,38 +1,36 @@
-<h1>
-    Hi {{name}}</h1>
-<p>Email: {{email}}</p>
-<p>Address: {{address.street +' ' + address.city +', ' + address.state +' '+ address.zipcode}}</p>
-<p>Hobbies: {{hobbies}}</p>
+<h1>{{name}}</h1>
+<p><strong>Email:</strong> {{email}}</p>
+<p><strong>Address:</strong> {{address.street}} {{address.city}}, {{address.state}}</p>
+<button (click)="toggleHobbies()">{{showHobbies ? "Hide Hobbies" : "Show Hobbies"}}</button>
 <div *ngIf="showHobbies">
+    <h3>Hobbies</h3>
     <ul>
-        <li *ngFor="let hobby of hobbies; let i = index">{{hobby}} | <button (click)="deleteHobby(i)">Delete</button></li>
+        <li *ngFor="let hobby of hobbies; let i = index">
+          {{hobby}} <button (click)="deleteHobby(i)">X</button>
+        </li>
     </ul>
+    <form (submit)="addHobby(hobby.value)">
+        <label>Add Hobby: </label><br />
+        <input type="text" #hobby /><br />
+    </form>
 </div>
-<button (click)="toggleHobbies()">{{ showHobbies ? 'Hide' : 'Show' }} Hobbies</button>
-<br />
-<form (submit)="addHobby(hobby.value)">
-    <label>Add Hobby:</label>
-    <input type="text" #hobby />
-</form>
 <hr />
-<h4>Edit User</h4>
+<h3>Edit User</h3>
 <form>
-    <label>Name:</label>
+    <label>Name: </label><br />
     <input type="text" name="name" [(ngModel)]="name" /><br />
-    <label>Email:</label>
-    <input type="email" name="email" [(ngModel)]="email" /><br />
-    <label>Street:</label>
+    <label>Email: </label><br />
+    <input type="text" name="email" [(ngModel)]="email" /><br />
+    <label>Street: </label><br />
     <input type="text" name="address.street" [(ngModel)]="address.street" /><br />
-    <label>City:</label>
+    <label>City: </label><br />
     <input type="text" name="address.city" [(ngModel)]="address.city" /><br />
-    <label>State:</label>
+    <label>State: </label><br />
     <input type="text" name="address.state" [(ngModel)]="address.state" /><br />
-    <label>Zip Code:</label>
-    <input type="number" name="address.zipcode" [(ngModel)]="address.zipcode" maxlength="5" /><br />
 </form>
 <hr />
 <h3>Posts</h3>
 <div *ngFor="let post of posts">
-    <h4 style="color:blue">{{post.title}}</h4>
+    <h3>{{post.title}}</h3>
     <p>{{post.body}}</p>
 </div>

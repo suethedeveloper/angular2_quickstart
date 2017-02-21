@@ -1,5 +1,5 @@
-import { Component }    from '@angular/core';
-import { PostsService } from '../services/posts.service';
+import { Component } from '@angular/core';
+import {PostsService} from '../services/posts.service';
 
 @Component({
   moduleId: module.id,
@@ -7,36 +7,45 @@ import { PostsService } from '../services/posts.service';
   templateUrl: 'user.component.html',
   providers: [PostsService]
 })
+export class UserComponent  {
+  name: string;
+  email: string;
+  address: address;
+  hobbies: string[];
+  showHobbies: boolean;
+  posts:Post[];
 
-export class UserComponent {
-  name:string;
-  email:string;
-  address:address;
-  hobbies:string[];
-  showHobbies:boolean;
-
-  constructor(private postsService: PostsService) {
+  constructor(private postsService: PostsService){
     this.name = 'John Doe';
-    this.email = 'jonedoe@gmail.com';
-    this.address = {
-      street: '123 main st',
-      city: 'Any Town',
-      state: 'CA',
-      zipcode: 94566
-    };
-    this.hobbies = ['Music', 'Camping', 'Craft'];
+    this.email = 'john@gmail.com',
+      this.address = {
+        street: '12 Main st',
+        city: 'Boston',
+        state: 'MA'
+      }
+    this.hobbies = ['Music', 'Movies', 'Sports'];
     this.showHobbies = false;
-    this.postsService.getPosts().subscribe(posts => {this.posts = posts;});
+
+
+    this.postsService.getPosts().subscribe(posts => {
+      this.posts = posts;
+    });
   }
+
   toggleHobbies(){
-    this.showHobbies = !this.showHobbies;
+    if(this.showHobbies == true){
+      this.showHobbies = false;
+    } else {
+      this.showHobbies = true;
+    }
   }
-  addHobby(hobby){
+
+  addHobby(hobby:string){
     this.hobbies.push(hobby);
   }
-  deleteHobby(index){
-    console.log('clicked', index);
-    this.hobbies.splice(index,1);
+
+  deleteHobby(i:number){
+    this.hobbies.splice(i, 1);
   }
 }
 
@@ -44,11 +53,10 @@ interface address {
   street: string;
   city: string;
   state: string;
-  zipcode: number;
 }
 
-interface Post {
+interface Post{
+  id: number;
   title: string;
   body: string;
-  id: number;
 }
